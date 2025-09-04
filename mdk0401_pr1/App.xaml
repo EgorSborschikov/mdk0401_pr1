@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:mdk0401_pr1"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Bahnschrift Light SemiCondensed"/>
+        </Style>
     </Application.Resources>
 </Application>

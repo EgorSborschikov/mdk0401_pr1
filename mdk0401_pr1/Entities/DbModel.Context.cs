@@ -15,9 +15,9 @@ namespace mdk0401_pr1.Entities
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class mdk0401_pr1Entities1 : DbContext
+    public partial class ApplicationDbContext : DbContext
     {
-        public mdk0401_pr1Entities1()
+        public ApplicationDbContext()
             : base("name=mdk0401_pr1Entities1")
         {
         }

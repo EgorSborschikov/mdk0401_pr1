@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7aa0890a01b04ac19bc1200f44b9d686" Name="Diagram1">
-        <EntityTypeShape EntityType="mdk0401_pr1Model.DirectorNames" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="7aa0890a01b04ac19bc1200f44b9d686" Name="Diagram1" ZoomLevel="94">
+        <EntityTypeShape EntityType="mdk0401_pr1Model.DirectorNames" Width="1.5" PointX="8.625" PointY="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="mdk0401_pr1Model.PartnerNames" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="mdk0401_pr1Model.PartnersInfo" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
         <EntityTypeShape EntityType="mdk0401_pr1Model.PartnersProducts" Width="1.5" PointX="6" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="mdk0401_pr1Model.PartnerTypes" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="mdk0401_pr1Model.Products" Width="1.5" PointX="3.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="mdk0401_pr1Model.ProductTypes" Width="1.5" PointX="1.5" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="mdk0401_pr1Model.sysdiagrams" Width="1.5" PointX="2.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mdk0401_pr1Model.PartnerTypes" Width="1.5" PointX="0.625" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mdk0401_pr1Model.Products" Width="1.5" PointX="11.125" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="mdk0401_pr1Model.ProductTypes" Width="1.5" PointX="8" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="mdk0401_pr1Model.sysdiagrams" Width="1.5" PointX="4" PointY="10.25" IsExpanded="true" />
         <AssociationConnector Association="mdk0401_pr1Model.FK_PartnersInfo_DirectorNames" ManuallyRouted="false" />
         <AssociationConnector Association="mdk0401_pr1Model.FK_PartnersInfo_PartnerNames" ManuallyRouted="false" />
         <AssociationConnector Association="mdk0401_pr1Model.FK_PartnersProducts_PartnerNames" ManuallyRouted="false" />

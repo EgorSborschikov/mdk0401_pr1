@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mdk0401_pr1.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,112 @@ namespace mdk0401_pr1
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
         }
+
+        //Метод загрузки данных на страницу из базы данных
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var context = new ApplicationDbContext())
+                {
+                    Console.WriteLine("Подключение к БД...");
+
+                    var partners = context.PartnersInfo.ToList();
+                    var partnerNames = context.PartnerNames.ToList();
+                    var partnerTypes = context.PartnerTypes.ToList();
+                    var directorNames = context.DirectorNames.ToList();
+                    var partnerProducts = context.PartnersProducts.ToList();
+                    var products = context.Products.ToList();
+
+                    Console.WriteLine($"Найдено партнеров: {partners.Count}");
+                    Console.WriteLine($"Найдено продуктов: {products.Count}");
+
+                    var partnerList = new List<PartnerDisplay>();
+
+                    foreach (var partner in partners) 
+                    {
+                        var partnerName = partnerNames.FirstOrDefault(pn => pn.ID == partner.IDPartnerName);
+                        var partnerType = partnerTypes.FirstOrDefault(pt => pt.ID == partner.IDPartnerType);
+                        var directorName = directorNames.FirstOrDefault(dn => dn.ID == partner.IDDirectorName);
+
+                        var productsForPartner = partnerProducts
+                            .Where(pp => pp.IDPartner == partner.ID)
+                            .ToList();
+
+                        // Получаем информацию о продуктах
+                        var productDetails = new List<ProductDisplay>();
+                        decimal totalCost = 0;
+
+                        foreach (var partnerProduct in productsForPartner)
+                        {
+                            var product = products.FirstOrDefault(p => p.ID == partnerProduct.IDProduct);
+                            if (product != null)
+                            {
+                                decimal productCost = partnerProduct.ProductAmount * product.MinCost;
+                                decimal discount = CalculateDiscount(partner.Rate);
+                                productCost = productCost * (1 - discount);
+
+                                if (productCost < 0) productCost = 0;
+
+                                productDetails.Add(new ProductDisplay
+                                {
+                                    Name = product.ProductionName,
+                                    Amount = partnerProduct.ProductAmount,
+                                    Cost = Math.Round(productCost, 2)
+                                });
+
+                                totalCost += productCost;
+                            }
+                        }
+
+                        partnerList.Add(new PartnerDisplay
+                        {
+                            Type = partner.PartnerTypes?.Type ?? "Не указано",
+                            Name = partnerName?.Name ?? "Не указано",
+                            Address = partner.JurAddress,
+                            Phone = partner.PhoneNumber,
+                            Rate = partner.Rate,
+                            Director = directorName?.Name ?? "Не указано",
+                            TotalCost = Math.Round(totalCost, 2),
+                            Products = productDetails
+                        });
+                    }
+
+                    PartnersListBox.ItemsSource = partnerList;
+                    Console.WriteLine($"Загружено заявок: {partnerList.Count}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}");
+                Console.WriteLine($"Ошибка: {ex.Message}");
+            }
+        }
+
+        private decimal CalculateDiscount(int rate)
+        {
+            return Math.Min(rate / 2 * 0.01m, 0.15m);
+        }
+    }
+
+    public class PartnerDisplay
+    {
+        public string Type { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+        public int Rate { get; set; }
+        public string Director { get; set; }
+        public decimal TotalCost { get; set; }
+        public List<ProductDisplay> Products { get; set; }
+    }
+
+    public class ProductDisplay
+    {
+        public string Name { get; set; }
+        public int Amount { get; set; }
+        public decimal Cost { get; set; }
     }
 }

@@ -5,8 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:mdk0401_pr1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Заявки партнеров" Height="450" Width="800"
+        Icon="/Resources/NewTechnologies.ico">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="#BBDCFA">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10">
+                <Image Width="45" Height="45" Source="/Resources/NewTechnologies.png"/>
+                <TextBlock Text="Заявки партнеров" FontSize="18" FontWeight="Bold" 
+                           VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ListBox x:Name="PartnersListBox" Margin="10" BorderThickness="0">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Margin="0,5" Padding="10">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Type}" FontWeight="Bold" FontSize="14"/>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14"/>
+                                <TextBlock Text="{Binding Address}" Margin="0,5"/>
+                                <TextBlock Text="{Binding Phone}" Margin="0,5"/>
+                                <TextBlock Text="{Binding Rate, StringFormat='Рейтинг: {0}'}" Margin="0,5"/>
+
+                                <TextBlock Text="Продукция:" FontWeight="Bold" Margin="0,10,0,5"/>
+
+                                <ItemsControl ItemsSource="{Binding Products}" Margin="10,5">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding Name}"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding Amount, StringFormat='{}Кол-во: {0}'}" Margin="10,0"/>
+                                                <TextBlock Grid.Column="2" Text="{Binding Cost, StringFormat='{}Стоимость: {0:C}'}" Margin="10,0"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <TextBlock Text="{Binding TotalCost, StringFormat='Общая стоимость заявки: {0:C}'}" 
+                                           FontWeight="Bold" Margin="0,10,0,5" Foreground="DarkGreen"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
     </Grid>
 </Window>
