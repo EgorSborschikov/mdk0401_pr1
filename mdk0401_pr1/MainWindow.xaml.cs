@@ -30,8 +30,14 @@ namespace mdk0401_pr1
         //Метод загрузки данных на страницу из базы данных
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadPartners();
+        }
+
+        private void LoadPartners()
+        {
             try
             {
+                // Подключение к базе данных, запрос на вытягивание данных 
                 using (var context = new ApplicationDbContext())
                 {
                     Console.WriteLine("Подключение к БД...");
@@ -46,14 +52,16 @@ namespace mdk0401_pr1
                     Console.WriteLine($"Найдено партнеров: {partners.Count}");
                     Console.WriteLine($"Найдено продуктов: {products.Count}");
 
+                    // Список для отображения ланных
                     var partnerList = new List<PartnerDisplay>();
 
-                    foreach (var partner in partners) 
+                    foreach (var partner in partners)
                     {
                         var partnerName = partnerNames.FirstOrDefault(pn => pn.ID == partner.IDPartnerName);
                         var partnerType = partnerTypes.FirstOrDefault(pt => pt.ID == partner.IDPartnerType);
                         var directorName = directorNames.FirstOrDefault(dn => dn.ID == partner.IDDirectorName);
 
+                        // Поиск продуктов, предоставляемых поставщиком
                         var productsForPartner = partnerProducts
                             .Where(pp => pp.IDPartner == partner.ID)
                             .ToList();
@@ -97,6 +105,7 @@ namespace mdk0401_pr1
                         });
                     }
 
+                    // Установка данных в ListBox
                     PartnersListBox.ItemsSource = partnerList;
                     Console.WriteLine($"Загружено заявок: {partnerList.Count}");
                 }
@@ -108,12 +117,43 @@ namespace mdk0401_pr1
             }
         }
 
+        // Метод расчета скидки
         private decimal CalculateDiscount(int rate)
         {
             return Math.Min(rate / 2 * 0.01m, 0.15m);
         }
+
+        // Обработчик события редактирования заявки
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var editWindow = new PartnerEditWindow();
+
+                if (editWindow.ShowDialog() == true)
+                {
+                    LoadPartners();
+                    ShowInfo("Успешно!", "Заявка успешно обновлена");
+                }
+            } catch (Exception ex)
+            {
+                ShowError("Ошибка", ex.Message);
+            }
+        }
+
+        // Методы с шаблоном отображения всплывающих окон
+        private void ShowError(string title, string message)
+        {
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void ShowInfo(string title, string message)
+        {
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 
+    // Дополнительные классы модели представления
     public class PartnerDisplay
     {
         public string Type { get; set; }

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:mdk0401_pr1"
         mc:Ignorable="d"
+        FontFamily="Bahnschrift Light SemiCondensed"
         Title="Заявки партнеров" Height="450" Width="800"
         Icon="/Resources/NewTechnologies.ico">
     <Grid>
@@ -18,6 +19,7 @@
                 <Image Width="45" Height="45" Source="/Resources/NewTechnologies.png"/>
                 <TextBlock Text="Заявки партнеров" FontSize="18" FontWeight="Bold" 
                            VerticalAlignment="Center" Margin="10,0,0,0"/>
+                <Button x:Name="BtnAdd" Content="Добавить заявку" Background="#0C4882" Foreground="White" Margin="20,0,0,0" Padding="10,5" Click="BtnAdd_Click"/>
             </StackPanel>
         </Grid>
 
