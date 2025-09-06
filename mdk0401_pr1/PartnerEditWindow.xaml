@@ -25,40 +25,81 @@
            VerticalAlignment="Center" Margin="10,0,0,0"/>
             </StackPanel>
         </Grid>
+        
         <!-- Форма -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="10">
-            <!-- Тип партнера -->
-            <TextBlock Text="Тип партнера*:"/>
-            <ComboBox x:Name="TypeComboBox" DisplayMemberPath="Type" SelectedValuePath="ID"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <!-- Наименование -->
-            <TextBlock Text="Наименование*:"/>
-            <TextBox x:Name="NameTextBox" MaxLength="100"/>
+                <!-- Порядок полей соответствует структуре базы данных -->
 
-            <!-- ФИО директора -->
-            <TextBlock Text="ФИО директора*:"/>
-            <TextBox x:Name="DirectorTextBox" MaxLength="100"/>
+                <!-- Тип партнера -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Тип партнера*:" Margin="0,5" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" x:Name="TypeComboBox" DisplayMemberPath="Type" SelectedValuePath="ID" 
+                         Margin="5" VerticalAlignment="Center"/>
 
-            <!-- Адрес -->
-            <TextBlock Text="Адрес*:"/>
-            <TextBox x:Name="AddressTextBox" MaxLength="200"/>
+                <!-- Наименование -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Наименование*:" Margin="0,5" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="NameTextBox" MaxLength="100" Margin="5" VerticalAlignment="Center"/>
 
-            <!-- Рейтинг -->
-            <TextBlock Text="Рейтинг*:"/>
-            <TextBox x:Name="RatingTextBox" /> <!-- PreviewTextInput="RatingTextBox_PreviewTextInput" --> 
+                <!-- ФИО директора -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="ФИО директора*:" Margin="0,10,0,5" VerticalAlignment="Center"/>
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical" Margin="5">
+                    <TextBox x:Name="FamilyNameTextBox" MaxLength="50" Margin="0,0,0,5" 
+                             ToolTip="Введите фамилию директора"/>
+                    <TextBox x:Name="FirstNameTextBox" MaxLength="50" Margin="0,0,0,5" 
+                             ToolTip="Введите имя директора"/>
+                    <TextBox x:Name="PatronymicTextBox" MaxLength="50" 
+                             ToolTip="Введите отчество директора"/>
+                </StackPanel>
 
-            <!-- Телефон -->
-            <TextBlock Text="Телефон*:"/>
-            <TextBox x:Name="PhoneTextBox" MaxLength="20"/>
+                <!-- Контактная информация -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Контактная информация (Телефон и Email):" Margin="0,10,0,5" VerticalAlignment="Center"/>
+                <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Vertical" Margin="5">
+                    <TextBox x:Name="PhoneTextBox" MaxLength="20" Margin="0,0,0,5" 
+                            ToolTip="Введите номер телефона"/>
+                    <TextBox x:Name="EmailTextBox" MaxLength="100" 
+                             ToolTip="Введите email адрес"/>
+                </StackPanel>
 
-            <!-- Email -->
-            <TextBlock Text="Email:"/>
-            <TextBox x:Name="EmailTextBox" MaxLength="100"/>
-        </StackPanel>
+                <!-- Адрес -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Адрес*:" Margin="0,10,0,5" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="4" Grid.Column="1" x:Name="AddressTextBox" MaxLength="200" Margin="5" 
+                        VerticalAlignment="Center" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+                <!-- Рейтинг -->
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Рейтинг*:" Margin="0,10,0,5" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="5" Grid.Column="1" x:Name="RatingTextBox" Margin="5" VerticalAlignment="Center" 
+                        Width="100" HorizontalAlignment="Left" PreviewTextInput="RatingTextBox_PreviewTextInput"
+                        ToolTip="Целое неотрицательное число"/>
+
+                <!-- ИНН -->
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="ИНН*:" Margin="0,10,0,5" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="6" Grid.Column="1" x:Name="InnTextBox" MaxLength="12" Margin="5" VerticalAlignment="Center"
+                        Width="150" HorizontalAlignment="Left" PreviewTextInput="InnTextBox_PreviewTextInput"
+                        ToolTip="10 или 12 цифр"/>
+            </Grid>
+        </ScrollViewer>
 
         <!-- Кнопки -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Вернуться назад" Width="100" Margin="0,0,10,0" Background="#F0F0F0" Click="BtnBack_Click"/>
             <Button Content="Отмена" Width="80" Margin="0,0,10,0" Click="CancelBtn_Click"/>
             <Button Content="Сохранить" Width="80" Background="#0C4882" Foreground="White" Click="SaveBtn_Click"/>
         </StackPanel>

@@ -94,6 +94,7 @@ namespace mdk0401_pr1
 
                         partnerList.Add(new PartnerDisplay
                         {
+                            PartnerId = partner.ID,
                             Type = partner.PartnerTypes?.Type ?? "Не указано",
                             Name = partnerName?.Name ?? "Не указано",
                             Address = partner.JurAddress,
@@ -114,6 +115,26 @@ namespace mdk0401_pr1
             {
                 MessageBox.Show($"Ошибка: {ex.Message}");
                 Console.WriteLine($"Ошибка: {ex.Message}");
+            }
+        }
+
+        private void PartnerItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (sender is Border border && border.DataContext is PartnerDisplay partner)
+                {
+                    var editWindow = new PartnerEditWindow(partner);
+                    if (editWindow.ShowDialog() == true)
+                    {
+                        LoadPartners(); // Обновляем список после редактирования
+                        ShowInfo("Успешно", "Заявка успешно обновлена");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowError("Ошибка", ex.Message);
             }
         }
 
@@ -156,6 +177,7 @@ namespace mdk0401_pr1
     // Дополнительные классы модели представления
     public class PartnerDisplay
     {
+        public int PartnerId { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
