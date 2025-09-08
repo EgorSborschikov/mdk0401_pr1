@@ -39,6 +39,7 @@ namespace mdk0401_pr1
             LoadPartnerData();
         }
 
+        // Загрузка данных
         private void LoadData()
         {
             try
@@ -55,6 +56,7 @@ namespace mdk0401_pr1
             }
         }
 
+        // Отдельная загрузка данных партнеров
         private void LoadPartnerData()
         {
             try
@@ -68,7 +70,7 @@ namespace mdk0401_pr1
 
                     if (partner == null) return;
 
-                    // Заполняем поля ФИО
+                    // Раздельное заполнение полей для ФИО директора
                     if (partner.DirectorNames != null)
                     {
                         FamilyNameTextBox.Text = partner.DirectorNames.FamilyName;
@@ -76,19 +78,16 @@ namespace mdk0401_pr1
                         PatronymicTextBox.Text = partner.DirectorNames.Patronymic;
                     }
 
-                    // Заполняем наименование партнера
                     if (partner.PartnerNames != null)
                     {
                         NameTextBox.Text = partner.PartnerNames.Name;
                     }
-
-                    // Остальные поля...
                     TypeComboBox.SelectedValue = partner.IDPartnerType;
                     AddressTextBox.Text = partner.JurAddress;
                     RatingTextBox.Text = partner.Rate.ToString();
                     PhoneTextBox.Text = partner.PhoneNumber;
                     EmailTextBox.Text = partner.Email;
-                    InnTextBox.Text = partner.INN; // Добавляем загрузку ИНН
+                    InnTextBox.Text = partner.INN; 
                 }
             }
             catch (Exception ex)
@@ -149,7 +148,6 @@ namespace mdk0401_pr1
                 return false;
             }
 
-            // Валидация email (если указан)
             if (!string.IsNullOrWhiteSpace(EmailTextBox.Text) &&
                 !IsValidEmail(EmailTextBox.Text))
             {
@@ -163,7 +161,6 @@ namespace mdk0401_pr1
                 return false;
             }
 
-            // Проверка формата ИНН (10 или 12 цифр)
             if (!IsValidInn(InnTextBox.Text))
             {
                 ShowValidationError("ИНН должен содержать 10 или 12 цифр");
@@ -251,7 +248,7 @@ namespace mdk0401_pr1
             partner.JurAddress = AddressTextBox.Text.Trim();
             partner.PhoneNumber = PhoneTextBox.Text.Trim();
             partner.Email = EmailTextBox.Text.Trim();
-            partner.INN = InnTextBox.Text.Trim(); // Добавляем сохранение ИНН
+            partner.INN = InnTextBox.Text.Trim();
 
             if (int.TryParse(RatingTextBox.Text, out int rating))
             {
